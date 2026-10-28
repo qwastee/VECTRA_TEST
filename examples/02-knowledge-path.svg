@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <metadata>Vector Composer demo. Each object is an editable vector group.</metadata>
+  <rect width="1200" height="675" fill="#FFD9C7"/>
+  <g id="book" data-name="Открытая книга" transform="translate(310 420) rotate(-8) scale(1.15)">
+    <path fill="#171822" d="M-160-73-8-42l170-42V64L-8 108l-152-36z"/><path fill="#F5F2EA" stroke="#171822" stroke-width="8" d="M-160-92c57 0 107 16 152 50v136c-44-31-95-44-152-40z"/><path fill="#FFFFFF" stroke="#171822" stroke-width="8" d="M164-101C94-101 39-84-8-42v136C39 60 95 44 164 44z"/><path fill="#F06A6A" stroke="#171822" stroke-width="7" d="m-35 85 2 61 26-19 30 12-2-61z"/>
+  </g>
+  <g id="paper" data-name="Лист бумаги" transform="translate(675 240) rotate(-12)">
+    <path fill="#FFFFFF" stroke="#171822" stroke-width="8" d="m-130-100 260-38 38 196-260 42z"/><path fill="none" stroke="#744FC6" stroke-width="7" stroke-linecap="round" d="m-82-40 160-25m-151 62L95-29M-64 36 54 18"/><circle cx="105" cy="30" r="22" fill="#F6E99E" stroke="#171822" stroke-width="7"/>
+  </g>
+  <g id="plant" data-name="Растение" transform="translate(930 465) scale(.85)">
+    <path fill="#744FC6" stroke="#171822" stroke-width="8" d="M-78 42H78L59 112H-59z"/><path fill="none" stroke="#171822" stroke-width="9" d="M0 45C-3-50-4-100 22-170M6-70c-31-38-62-56-96-62m105 13c28-30 53-47 88-55"/><path fill="#F06A6A" stroke="#171822" stroke-width="7" d="M-95-156c47 5 76 26 92 66-51 1-82-21-92-66Z"/><path fill="#F6E99E" stroke="#171822" stroke-width="7" d="M110-195c-7 46-30 74-73 87 0-51 24-81 73-87Z"/>
+  </g>
+</svg>
