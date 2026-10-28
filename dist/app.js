@@ -14,61 +14,9 @@
     { name: 'Ночь', colors: ['#20213A', '#7E70D8', '#F4DF83', '#F4F0E8'] }
   ];
 
-  const demoAssets = [
-    {
-      id: 'demo-book', name: 'Открытая книга', category: 'main',
-      tags: ['книга','знания','обучение','образование','история','идея','путь','book','knowledge'], viewBox: '0 0 240 180', demo: true,
-      markup: `<path fill="#171822" d="M23 48 111 67l105-26v91l-105 28-88-22z"/><path fill="#F5F2EA" stroke="#171822" stroke-width="5" stroke-linejoin="round" d="M23 36c32 0 64 8 88 29v84c-25-19-54-27-88-24z"/><path fill="#FFFFFF" stroke="#171822" stroke-width="5" stroke-linejoin="round" d="M217 29c-42 0-75 10-106 36v84c30-20 64-30 106-30z"/><path fill="none" stroke="#7D66D9" stroke-width="4" d="M39 59c21 2 39 7 57 17M39 76c22 2 39 7 57 17M199 53c-25 3-47 11-72 27M199 72c-27 4-49 12-72 27"/><path fill="#F29B86" stroke="#171822" stroke-width="4" d="m94 143 1 34 17-11 18 7-1-34z"/>`
-    },
-    {
-      id: 'demo-puzzle', name: 'Детали пазла', category: 'main',
-      tags: ['пазл','идея','решение','команда','связь','часть','система','puzzle','solution'], viewBox: '0 0 220 170', demo: true,
-      markup: `<path fill="#F5E99D" stroke="#171822" stroke-width="5" stroke-linejoin="round" d="M28 46h50c-4-6-4-14 1-20 8-10 25-9 32 2 4 6 3 13-1 18h44v39c8-5 18-4 24 3 9 10 4 28-9 32-6 2-11 0-15-3v36H99c6-7 5-18-1-25-8-9-23-8-30 1-5 7-4 17 1 24H28v-45c6 3 14 3 20-2 9-8 8-24-1-31-6-4-13-4-19 0z"/><path fill="#F29B86" stroke="#171822" stroke-width="5" stroke-linejoin="round" d="M155 27h37v42c-7-5-17-4-23 2-9 9-7 25 4 32 6 4 13 3 19 0v40h-38v-26c4 3 9 5 15 3 13-4 18-22 9-32-6-7-16-8-24-3V46h-44c4-5 5-12 1-18h44z"/>`
-    },
-    {
-      id: 'demo-headphones', name: 'Наушники', category: 'main',
-      tags: ['наушники','звук','фокус','тишина','музыка','концентрация','headphones','focus'], viewBox: '0 0 230 190', demo: true,
-      markup: `<path fill="none" stroke="#171822" stroke-width="18" stroke-linecap="round" d="M42 105C42 40 82 18 117 18s75 23 75 87"/><path fill="none" stroke="#7D66D9" stroke-width="11" stroke-linecap="round" d="M55 101c0-48 27-69 62-69s62 21 62 69"/><path fill="#DCD5FF" stroke="#171822" stroke-width="6" d="M27 95c0-13 10-23 23-23h13v82H50c-13 0-23-10-23-23zM203 95c0-13-10-23-23-23h-13v82h13c13 0 23-10 23-23z"/><path fill="#F5E99D" stroke="#171822" stroke-width="5" d="M40 92h30v49H40zM160 92h30v49h-30z"/>`
-    },
-    {
-      id: 'demo-lamp', name: 'Настольная лампа', category: 'main',
-      tags: ['лампа','свет','идея','озарение','работа','фокус','lamp','light'], viewBox: '0 0 220 220', demo: true,
-      markup: `<path fill="#171822" d="M82 187h92l25 19H55z"/><path fill="#DCD5FF" stroke="#171822" stroke-width="6" d="M105 181h55v14h-55z"/><path fill="none" stroke="#171822" stroke-width="9" stroke-linecap="round" d="m133 183-1-93-46-34"/><circle cx="132" cy="87" r="10" fill="#F29B86" stroke="#171822" stroke-width="5"/><path fill="#FFFFFF" stroke="#171822" stroke-width="6" stroke-linejoin="round" d="m91 34-53 70 58 13 24-63z"/><path fill="#F5E99D" d="m48 100 46 10 18-50z"/>`
-    },
-    {
-      id: 'demo-notebook', name: 'Блокнот', category: 'main',
-      tags: ['блокнот','план','задача','список','работа','запись','notebook','plan'], viewBox: '0 0 220 180', demo: true,
-      markup: `<path fill="#171822" d="m30 49 145-23 23 119-143 28z"/><path fill="#F5E99D" stroke="#171822" stroke-width="5" stroke-linejoin="round" d="M24 35 169 12l22 119-145 28z"/><path fill="none" stroke="#171822" stroke-width="5" d="m45 45 5 25m17-29 5 25m17-29 5 25m17-29 5 25m17-29 5 25"/><path fill="none" stroke="#7D66D9" stroke-width="4" stroke-linecap="round" d="m66 91 87-14m-82 38 87-14m-82 38 58-10"/>`
-    },
-    {
-      id: 'demo-pencil', name: 'Карандаш', category: 'main',
-      tags: ['карандаш','творчество','идея','писать','рисовать','работа','pencil','create'], viewBox: '0 0 240 80', demo: true,
-      markup: `<path fill="#F29B86" stroke="#171822" stroke-width="5" stroke-linejoin="round" d="m23 49 167-30 10 35L33 71z"/><path fill="#F5E99D" stroke="#171822" stroke-width="5" stroke-linejoin="round" d="m190 19 27 7-17 28z"/><path fill="#171822" d="m217 26 15 5-32 23z"/><path fill="#DCD5FF" stroke="#171822" stroke-width="5" d="m23 49 18-3 10 35-18 3z"/>`
-    },
-    {
-      id: 'demo-phone', name: 'Смартфон', category: 'background',
-      tags: ['телефон','экран','технологии','связь','цифровой','phone','digital'], viewBox: '0 0 190 250', demo: true,
-      markup: `<path fill="#7D66D9" stroke="#171822" stroke-width="6" d="M32 9h126c11 0 20 9 20 20v192c0 11-9 20-20 20H32c-11 0-20-9-20-20V29C12 18 21 9 32 9Z"/><path fill="#DCD5FF" stroke="#171822" stroke-width="5" d="M25 35h140v170H25z"/><circle cx="95" cy="222" r="8" fill="#F5E99D" stroke="#171822" stroke-width="4"/><path fill="#F5E99D" stroke="#171822" stroke-width="4" d="M48 73h94v28H48z"/><path fill="#F29B86" stroke="#171822" stroke-width="4" d="M48 116h42v51H48z"/><path fill="#A7DDD8" stroke="#171822" stroke-width="4" d="M100 116h42v51h-42z"/>`
-    },
-    {
-      id: 'demo-plant', name: 'Растение', category: 'background',
-      tags: ['растение','рост','развитие','жизнь','природа','идея','plant','growth'], viewBox: '0 0 210 230', demo: true,
-      markup: `<path fill="#171822" d="M55 188h101l-13 33H67z"/><path fill="#DCD5FF" stroke="#171822" stroke-width="6" d="M50 171h111l-12 42H63z"/><path fill="none" stroke="#171822" stroke-width="6" stroke-linecap="round" d="M105 173c-2-63-4-91 9-136m-8 69c-18-25-37-37-58-42m62 18c17-20 31-30 50-34"/><path fill="#F29B86" stroke="#171822" stroke-width="5" d="M45 45c28 2 45 13 58 38-31 3-50-8-58-38Z"/><path fill="#F5E99D" stroke="#171822" stroke-width="5" d="M165 31c-4 27-17 43-43 53-1-31 12-49 43-53Z"/><path fill="#A7DDD8" stroke="#171822" stroke-width="5" d="M76 102c24 8 36 24 38 49-28-6-42-22-38-49Z"/>`
-    },
-    {
-      id: 'demo-sheet', name: 'Лист бумаги', category: 'background',
-      tags: ['лист','бумага','фон','документ','текст','план','paper','document'], viewBox: '0 0 260 200', demo: true,
-      markup: `<path fill="#7D66D9" opacity=".35" d="m34 59 177-25 24 126-177 27z"/><path fill="#FFFFFF" stroke="#171822" stroke-width="5" stroke-linejoin="round" d="m22 40 177-25 24 126-177 27z"/><path fill="none" stroke="#7D66D9" stroke-width="4" stroke-linecap="round" d="m54 67 108-15M59 91l127-18M64 115l87-13"/><circle cx="187" cy="121" r="14" fill="#F5E99D" stroke="#171822" stroke-width="4"/>`
-    },
-    {
-      id: 'demo-disc', name: 'Малая деталь', category: 'background',
-      tags: ['деталь','точка','акцент','круг','часть','decor','detail'], viewBox: '0 0 100 100', demo: true,
-      markup: `<ellipse cx="50" cy="58" rx="38" ry="22" fill="#171822"/><ellipse cx="50" cy="48" rx="38" ry="22" fill="#F5E99D" stroke="#171822" stroke-width="5"/><ellipse cx="50" cy="48" rx="11" ry="7" fill="#DCD5FF" stroke="#171822" stroke-width="4"/>`
-    }
-  ];
-
+  // Только SVG, импортированные из исходных иллюстраций.
   const state = {
-    assets: structuredClone(demoAssets),
+    assets: [],
     scene: [],
     selectedId: null,
     width: 1080,
@@ -407,6 +355,7 @@
 
   function composeByMetaphor(prompt = $('#metaphorInput').value) {
     if (!prompt.trim()) return toast('Введите метафору или заголовок');
+    if (!state.assets.length) return toast('Сначала загрузите исходные SVG-объекты');
     snapshot();
     const ranked = state.assets.map(asset => ({asset, score: scoreAsset(asset, prompt)})).sort((a,b) => b.score-a.score);
     let selected = ranked.filter(x => x.score > 0).slice(0, 5).map(x => x.asset);
@@ -535,23 +484,9 @@
     if (type === 'help') {
       root.innerHTML = `<div class="eyebrow">Короткая демонстрация</div><h2>От идеи до SVG за три шага</h2><p>Редактор не создаёт и не дорисовывает объекты. Он работает как умная монтажная поверхность для готовой библиотеки.</p><div class="steps"><div class="step"><b>1 · Загрузите</b><span>Добавьте отдельные SVG-файлы. Структура, пропорции и векторные пути сохраняются.</span></div><div class="step"><b>2 · Скомпонуйте</b><span>Введите метафору или точные названия. Алгоритм подберёт объекты и разложит их на холсте.</span></div><div class="step"><b>3 · Экспортируйте</b><span>Настройте слои, формат и палитру, затем скачайте редактируемый SVG.</span></div></div><p class="microcopy">Безопасность: при импорте удаляются исполняемые скрипты, внешние ссылки и foreignObject; геометрия SVG остаётся без изменений.</p>`;
     } else {
-      root.innerHTML = `<div class="eyebrow">Готовые сценарии</div><h2>Три примера композиции</h2><p>Примеры используют только объекты встроенного демо-набора. Замените его на 20 исходных SVG — логика останется той же.</p><div class="example-list"><button class="example-preset" data-example="ideas"><span class="example-icon" style="background:#ded7ff">✦</span><span><b>Идеи складываются в решение</b><small>Пазл, лампа, карандаш, блокнот</small></span><span>Открыть →</span></button><button class="example-preset" data-example="knowledge"><span class="example-icon" style="background:#f3e89b">⌁</span><span><b>Знания открывают новые пути</b><small>Книга, лист, лампа, растение</small></span><span>Открыть →</span></button><button class="example-preset" data-example="focus"><span class="example-icon" style="background:#a7ddd8">◎</span><span><b>Фокус на главном</b><small>Наушники, лампа, блокнот</small></span><span>Открыть →</span></button></div>`;
-      $$('.example-preset', root).forEach(btn => btn.addEventListener('click', () => { loadExample(btn.dataset.example); $('#infoDialog').close(); }));
+      root.innerHTML = `<div class="eyebrow">Исходные материалы</div><h2>Примеры работы</h2><p>Сначала загрузите SVG из исходных иллюстраций кнопкой ＋ или перетаскиванием. Затем используйте подбор по метафоре или по названиям. Посторонние встроенные рисунки отключены.</p>`;
     }
     $('#infoDialog').showModal();
-  }
-
-  function loadExample(key) {
-    const examples = {
-      ideas: {prompt:'Идеи складываются в решение', ids:['demo-puzzle','demo-lamp','demo-pencil','demo-notebook'], layout:'editorial', palette:0},
-      knowledge: {prompt:'Знания открывают новые пути', ids:['demo-book','demo-sheet','demo-lamp','demo-plant'], layout:'diagonal', palette:3},
-      focus: {prompt:'Фокус на главном', ids:['demo-headphones','demo-lamp','demo-notebook'], layout:'orbit', palette:1}
-    };
-    const ex = examples[key]; snapshot();
-    $('#metaphorInput').value = ex.prompt; state.layout = ex.layout; $('#layoutSelect').value = ex.layout;
-    state.paletteIndex = ex.palette; state.palette = [...palettes[ex.palette].colors]; state.background = state.palette[0]; state.scene = [];
-    ex.ids.map(id => state.assets.find(a => a.id === id)).filter(Boolean).forEach(asset => addObject(asset));
-    layoutScene(ex.layout); toast(`Открыт пример: ${ex.prompt}`);
   }
 
   $$('.segment').forEach(btn => btn.addEventListener('click', () => {
@@ -570,7 +505,7 @@
   $('#dropzone').addEventListener('drop', e => importSvgFiles(e.dataTransfer.files));
   $('#searchInput').addEventListener('input', renderLibrary);
   $('#categoryFilter').addEventListener('change', renderLibrary);
-  $('#resetDemoBtn').addEventListener('click', () => { state.assets = structuredClone(demoAssets); renderLibrary(); toast('Демо-библиотека восстановлена'); });
+  $('#resetDemoBtn').addEventListener('click', () => { if (!confirm('Очистить библиотеку и композицию?')) return; snapshot(); state.assets = []; state.scene = []; state.selectedId = null; renderAll(); toast('Библиотека очищена'); });
   $('#layoutSelect').addEventListener('change', e => { snapshot(); state.layout = e.target.value; layoutScene(); });
   $('#shuffleBtn').addEventListener('click', () => { snapshot(); layoutScene(); toast('Композиция перестроена'); });
   $('#applyPaletteBtn').addEventListener('click', () => { snapshot(); state.paletteIndex = -1; renderAll(); toast('Палитра применена ко всей сцене'); });
@@ -631,5 +566,5 @@
   });
   window.addEventListener('resize', fitCanvas);
 
-  renderLibrary(); renderPalette(); loadExample('ideas');
+  renderLibrary(); renderPalette(); renderAll();
 })();
