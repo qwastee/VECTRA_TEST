@@ -28,9 +28,12 @@
       asset.bundled = true;
       return asset;
     }));
+    const failures = results.map((r, i) => r.status === 'rejected' ? `${bundledManifest[i].path}: ${r.reason?.message || r.reason}` : null).filter(Boolean);
+    if (failures.length) console.error('VECTRA SVG load failures:', failures);
     bundledAssets = results.filter(r => r.status === 'fulfilled').map(r => r.value);
     state.assets = [...bundledAssets];
     renderLibrary();
+    $('#statusText').textContent = failures.length ? `Ошибка библиотеки: ${bundledAssets.length}/22. ${failures[0]}` : `Встроенная библиотека готова: ${bundledAssets.length}/22 SVG`;
     if (bundledAssets.length !== bundledManifest.length) toast(`Загружено ${bundledAssets.length} из ${bundledManifest.length} встроенных SVG`);
     else toast(`Библиотека готова: ${bundledAssets.length} SVG`);
   }
