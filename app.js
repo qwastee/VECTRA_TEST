@@ -14,7 +14,28 @@
     { name: 'Ночь', colors: ['#20213A', '#7E70D8', '#F4DF83', '#F4F0E8'] }
   ];
 
-  // Встроенная библиотека: только исходные SVG-файлы из репозитория.\n  const bundledManifest = [{"path":"background objects/Group 2136136347.svg","category":"background","name":"Group 2136136347"},{"path":"background objects/Vector.svg","category":"background","name":"Vector"},{"path":"background objects/Книга.svg","category":"background","name":"Книга"},{"path":"background objects/Кошелек.svg","category":"background","name":"Кошелек"},{"path":"background objects/Лампа.svg","category":"background","name":"Лампа"},{"path":"background objects/Монета.svg","category":"background","name":"Монета"},{"path":"background objects/Наушники.svg","category":"background","name":"Наушники"},{"path":"background objects/Пазлы.svg","category":"background","name":"Пазлы"},{"path":"background objects/Папка.svg","category":"background","name":"Папка"},{"path":"background objects/Ручка.svg","category":"background","name":"Ручка"},{"path":"background objects/Телефон.svg","category":"background","name":"Телефон"},{"path":"main-objects/Group 2136136344.svg","category":"main","name":"Group 2136136344"},{"path":"main-objects/Vector.svg","category":"main","name":"Vector"},{"path":"main-objects/Книга.svg","category":"main","name":"Книга"},{"path":"main-objects/Кошелек.svg","category":"main","name":"Кошелек"},{"path":"main-objects/Лампа.svg","category":"main","name":"Лампа"},{"path":"main-objects/Монета.svg","category":"main","name":"Монета"},{"path":"main-objects/Наушники.svg","category":"main","name":"Наушники"},{"path":"main-objects/Пазлы.svg","category":"main","name":"Пазлы"},{"path":"main-objects/Папка.svg","category":"main","name":"Папка"},{"path":"main-objects/Ручка.svg","category":"main","name":"Ручка"},{"path":"main-objects/Телефон.svg","category":"main","name":"Телефон"}];\n  let bundledAssets = [];\n  async function loadBundledAssets() {\n    const results = await Promise.allSettled(bundledManifest.map(async item => {\n      const response = await fetch(encodeURI(item.path));\n      if (!response.ok) throw new Error(`${item.path}: HTTP ${response.status}`);\n      const asset = sanitizeSvg(await response.text(), item.name + '.svg');\n      asset.category = item.category;\n      asset.name = item.name === 'Vector' ? (item.category === 'main' ? 'Вектор (главный)' : 'Вектор (фон)') : item.name;\n      asset.tags = tokenize(asset.name);\n      asset.bundled = true;\n      return asset;\n    }));\n    bundledAssets = results.filter(r => r.status === 'fulfilled').map(r => r.value);\n    state.assets = [...bundledAssets];\n    renderLibrary();\n    if (bundledAssets.length !== bundledManifest.length) toast(`Загружено ${bundledAssets.length} из ${bundledManifest.length} встроенных SVG`);\n    else toast(`Библиотека готова: ${bundledAssets.length} SVG`);\n  }\n\n  // Только SVG, импортированные из исходных иллюстраций.
+  // Встроенная библиотека: только исходные SVG-файлы из репозитория.
+  const bundledManifest = [{"path":"background objects/Group 2136136347.svg","category":"background","name":"Group 2136136347"},{"path":"background objects/Vector.svg","category":"background","name":"Vector"},{"path":"background objects/Книга.svg","category":"background","name":"Книга"},{"path":"background objects/Кошелек.svg","category":"background","name":"Кошелек"},{"path":"background objects/Лампа.svg","category":"background","name":"Лампа"},{"path":"background objects/Монета.svg","category":"background","name":"Монета"},{"path":"background objects/Наушники.svg","category":"background","name":"Наушники"},{"path":"background objects/Пазлы.svg","category":"background","name":"Пазлы"},{"path":"background objects/Папка.svg","category":"background","name":"Папка"},{"path":"background objects/Ручка.svg","category":"background","name":"Ручка"},{"path":"background objects/Телефон.svg","category":"background","name":"Телефон"},{"path":"main-objects/Group 2136136344.svg","category":"main","name":"Group 2136136344"},{"path":"main-objects/Vector.svg","category":"main","name":"Vector"},{"path":"main-objects/Книга.svg","category":"main","name":"Книга"},{"path":"main-objects/Кошелек.svg","category":"main","name":"Кошелек"},{"path":"main-objects/Лампа.svg","category":"main","name":"Лампа"},{"path":"main-objects/Монета.svg","category":"main","name":"Монета"},{"path":"main-objects/Наушники.svg","category":"main","name":"Наушники"},{"path":"main-objects/Пазлы.svg","category":"main","name":"Пазлы"},{"path":"main-objects/Папка.svg","category":"main","name":"Папка"},{"path":"main-objects/Ручка.svg","category":"main","name":"Ручка"},{"path":"main-objects/Телефон.svg","category":"main","name":"Телефон"}];
+  let bundledAssets = [];
+  async function loadBundledAssets() {
+    const results = await Promise.allSettled(bundledManifest.map(async item => {
+      const response = await fetch(encodeURI(item.path));
+      if (!response.ok) throw new Error(`${item.path}: HTTP ${response.status}`);
+      const asset = sanitizeSvg(await response.text(), item.name + '.svg');
+      asset.category = item.category;
+      asset.name = item.name === 'Vector' ? (item.category === 'main' ? 'Вектор (главный)' : 'Вектор (фон)') : item.name;
+      asset.tags = tokenize(asset.name);
+      asset.bundled = true;
+      return asset;
+    }));
+    bundledAssets = results.filter(r => r.status === 'fulfilled').map(r => r.value);
+    state.assets = [...bundledAssets];
+    renderLibrary();
+    if (bundledAssets.length !== bundledManifest.length) toast(`Загружено ${bundledAssets.length} из ${bundledManifest.length} встроенных SVG`);
+    else toast(`Библиотека готова: ${bundledAssets.length} SVG`);
+  }
+
+  // Только SVG, импортированные из исходных иллюстраций.
   const state = {
     assets: [],
     scene: [],
@@ -372,7 +393,8 @@
   }
 
   function composeByNames() {
-    const names = $('#componentInput').value.split(/[,;\n]+/).map(normalize).filter(Boolean);
+    const names = $('#componentInput').value.split(/[,;
+]+/).map(normalize).filter(Boolean);
     if (!names.length) return toast('Введите названия компонентов');
     const selected = [];
     const missing = [];
@@ -566,4 +588,6 @@
   });
   window.addEventListener('resize', fitCanvas);
 
-  renderLibrary(); renderPalette(); renderAll();\n  loadBundledAssets();\n})();
+  renderLibrary(); renderPalette(); renderAll();
+  loadBundledAssets();
+})();
