@@ -393,8 +393,7 @@
   }
 
   function composeByNames() {
-    const names = $('#componentInput').value.split(/[,;
-]+/).map(normalize).filter(Boolean);
+    const names = $('#componentInput').value.split(/[,;\n]+/).map(normalize).filter(Boolean);
     if (!names.length) return toast('Введите названия компонентов');
     const selected = [];
     const missing = [];
