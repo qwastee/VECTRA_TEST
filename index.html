@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f5ef">
+  <title>VECTRA — SVG-композиции</title>
+  <meta name="description" content="Собирайте редактируемые SVG-композиции только из готовых объектов библиотеки.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="VECTRA">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span><b>VECTRA</b><small>только готовые SVG-объекты</small></span>
+    </a>
+    <nav class="top-actions" aria-label="Действия проекта">
+      <button class="btn ghost" id="examplesBtn">Примеры</button>
+      <button class="btn ghost" id="helpBtn">Как работает</button>
+      <button class="btn primary" id="exportBtn">Экспорт SVG <span>↗</span></button>
+    </nav>
+  </header>
+
+  <main class="app-shell">
+    <aside class="left-panel panel">
+      <section class="panel-section intro">
+        <div class="eyebrow">01 · Идея</div>
+        <h1>Соберите смысл<br>из готовых деталей</h1>
+        <p>Ни один новый объект не создаётся. Сервис подбирает и располагает только элементы вашей SVG-библиотеки.</p>
+      </section>
+
+      <section class="panel-section mode-card">
+        <div class="segmented" role="tablist" aria-label="Режим композиции">
+          <button class="segment active" data-mode="metaphor" role="tab" aria-selected="true">По метафоре</button>
+          <button class="segment" data-mode="components" role="tab" aria-selected="false">По названиям</button>
+        </div>
+
+        <div class="mode-pane" id="metaphorPane">
+          <label for="metaphorInput">Метафора или заголовок</label>
+          <textarea id="metaphorInput" rows="3" placeholder="Например: знания открывают новые пути">Идеи складываются в решение</textarea>
+          <div class="suggestions" aria-label="Быстрые примеры">
+            <button data-prompt="Фокус на главном">Фокус</button>
+            <button data-prompt="Знания открывают новые пути">Знания</button>
+            <button data-prompt="Идеи складываются в решение">Идеи</button>
+          </div>
+          <button class="btn primary wide" id="composeByMetaphor">Собрать композицию <span>✦</span></button>
+          <p class="microcopy">Локальный анализ текста: названия и теги сопоставляются с объектами. Изображения не генерируются.</p>
+        </div>
+
+        <div class="mode-pane hidden" id="componentsPane">
+          <label for="componentInput">Названия через запятую</label>
+          <textarea id="componentInput" rows="3" placeholder="книга, пазл, карандаш"></textarea>
+          <button class="btn primary wide" id="composeByNames">Собрать из выбранных <span>＋</span></button>
+          <p class="microcopy">Можно вводить полные названия или части названий файлов.</p>
+        </div>
+      </section>
+
+      <section class="panel-section library-section">
+        <div class="section-heading">
+          <div><div class="eyebrow">02 · Библиотека</div><h2>SVG-объекты <span id="assetCount">0</span></h2></div>
+          <label class="icon-btn" title="Загрузить SVG" aria-label="Загрузить SVG">＋<input id="svgUpload" type="file" accept="image/svg+xml,.svg" multiple hidden></label>
+        </div>
+        <div class="dropzone" id="dropzone" tabindex="0">
+          <span>Перетащите SVG сюда</span>
+          <small>или нажмите ＋ · можно несколько файлов</small>
+        </div>
+        <div class="library-toolbar">
+          <input id="searchInput" type="search" placeholder="Поиск объектов">
+          <select id="categoryFilter" aria-label="Фильтр категории">
+            <option value="all">Все</option>
+            <option value="main">Главные</option>
+            <option value="background">Фоновые</option>
+          </select>
+        </div>
+        <div class="asset-grid" id="assetGrid" aria-live="polite"></div>
+        <button class="text-btn" id="resetDemoBtn">↺ Очистить библиотеку</button>
+      </section>
+    </aside>
+
+    <section class="workspace">
+      <div class="workspace-toolbar">
+        <div class="format-group">
+          <span class="toolbar-label">Формат</span>
+          <button class="format-btn active" data-size="1080x1080">1:1</button>
+          <button class="format-btn" data-size="1200x675">16:9</button>
+          <button class="format-btn" data-size="675x1200">9:16</button>
+        </div>
+        <div class="history-group">
+          <button class="icon-btn" id="undoBtn" title="Отменить">↶</button>
+          <button class="icon-btn" id="redoBtn" title="Повторить">↷</button>
+          <span class="divider"></span>
+          <button class="icon-btn" id="zoomOutBtn" title="Уменьшить">−</button>
+          <span id="zoomLabel">62%</span>
+          <button class="icon-btn" id="zoomInBtn" title="Увеличить">＋</button>
+        </div>
+      </div>
+
+      <div class="canvas-stage" id="canvasStage">
+        <div class="canvas-wrap" id="canvasWrap">
+          <svg id="artboard" viewBox="0 0 1080 1080" width="1080" height="1080" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Холст композиции">
+            <rect id="canvasBackground" width="1080" height="1080" fill="#DCD5FF"/>
+            <g id="scene"></g>
+            <g id="selectionOverlay" pointer-events="none"></g>
+          </svg>
+        </div>
+        <div class="canvas-hint" id="canvasHint">Перетаскивайте объекты · Delete — удалить · стрелки — сдвинуть</div>
+      </div>
+
+      <div class="statusbar">
+        <span><i class="status-dot"></i> Векторный режим</span>
+        <span id="statusText">Все элементы остаются редактируемыми</span>
+        <span id="canvasSizeLabel">1080 × 1080 px</span>
+      </div>
+    </section>
+
+    <aside class="right-panel panel">
+      <section class="panel-section">
+        <div class="eyebrow">03 · Настройки</div>
+        <h2>Композиция</h2>
+        <div class="control-row">
+          <label for="layoutSelect">Сетка</label>
+          <select id="layoutSelect">
+            <option value="editorial">Редакционная</option>
+            <option value="orbit">Орбита</option>
+            <option value="diagonal">Диагональ</option>
+            <option value="stack">Стопка</option>
+          </select>
+        </div>
+        <button class="btn secondary wide" id="shuffleBtn">Перекомпоновать <span>⌁</span></button>
+      </section>
+
+      <section class="panel-section">
+        <div class="section-heading compact">
+          <div><div class="eyebrow">04 · Палитра</div><h2>Цветовая схема</h2></div>
+          <label class="icon-btn" title="Загрузить JSON/TXT палитру">＋<input id="paletteUpload" type="file" accept=".json,.txt,application/json,text/plain" hidden></label>
+        </div>
+        <div class="palette-presets" id="palettePresets"></div>
+        <div class="swatch-editor" id="swatchEditor"></div>
+        <button class="btn secondary wide" id="applyPaletteBtn">Применить ко всей сцене</button>
+        <p class="microcopy">Перекрашиваются только fill/stroke. Геометрия и пропорции не меняются.</p>
+      </section>
+
+      <section class="panel-section layers-section">
+        <div class="section-heading compact">
+          <div><div class="eyebrow">05 · Слои</div><h2>Объекты сцены</h2></div>
+          <span class="layer-count" id="layerCount">0</span>
+        </div>
+        <div class="layers-list" id="layersList"></div>
+      </section>
+
+      <section class="panel-section selection-panel hidden" id="selectionPanel">
+        <div class="eyebrow">Выбранный объект</div>
+        <div class="selection-title"><b id="selectedName">—</b><button class="icon-btn danger" id="deleteBtn" title="Удалить">×</button></div>
+        <div class="transform-grid">
+          <label>X <input type="number" id="xInput"></label>
+          <label>Y <input type="number" id="yInput"></label>
+          <label>Масштаб <input type="number" id="scaleInput" step="0.05" min="0.1" max="8"></label>
+          <label>Угол, ° <input type="number" id="rotationInput" step="1" min="0" max="360"></label>
+        </div>
+        <div class="rotation-control"><label for="rotationSlider">Поворот вокруг центра: <output id="rotationValue">0°</output></label><input id="rotationSlider" type="range" min="0" max="360" step="1" value="0"><div class="rotation-actions"><button class="btn tertiary" id="rotateLeftBtn" type="button">↶ −15°</button><button class="btn tertiary" id="rotateRightBtn" type="button">↷ +15°</button><button class="btn tertiary" id="rotateResetBtn" type="button">Сбросить</button></div></div>
+        <div class="button-row">
+          <button class="btn tertiary" id="duplicateBtn">Дублировать</button>
+          <button class="btn tertiary" id="sendBackBtn">Ниже</button>
+          <button class="btn tertiary" id="bringFrontBtn">Выше</button>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <dialog id="infoDialog" class="dialog">
+    <form method="dialog"><button class="dialog-close" aria-label="Закрыть">×</button></form>
+    <div class="dialog-content" id="dialogContent"></div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
