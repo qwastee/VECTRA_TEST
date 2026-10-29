@@ -14,7 +14,7 @@
     { name: 'Ночь', colors: ['#20213A', '#7E70D8', '#F4DF83', '#F4F0E8'] }
   ];
 
-  // Только SVG, импортированные из исходных иллюстраций.
+  // Встроенная библиотека: только исходные SVG-файлы из репозитория.\n  const bundledManifest = [{"path":"background objects/Group 2136136347.svg","category":"background","name":"Group 2136136347"},{"path":"background objects/Vector.svg","category":"background","name":"Vector"},{"path":"background objects/Книга.svg","category":"background","name":"Книга"},{"path":"background objects/Кошелек.svg","category":"background","name":"Кошелек"},{"path":"background objects/Лампа.svg","category":"background","name":"Лампа"},{"path":"background objects/Монета.svg","category":"background","name":"Монета"},{"path":"background objects/Наушники.svg","category":"background","name":"Наушники"},{"path":"background objects/Пазлы.svg","category":"background","name":"Пазлы"},{"path":"background objects/Папка.svg","category":"background","name":"Папка"},{"path":"background objects/Ручка.svg","category":"background","name":"Ручка"},{"path":"background objects/Телефон.svg","category":"background","name":"Телефон"},{"path":"main-objects/Group 2136136344.svg","category":"main","name":"Group 2136136344"},{"path":"main-objects/Vector.svg","category":"main","name":"Vector"},{"path":"main-objects/Книга.svg","category":"main","name":"Книга"},{"path":"main-objects/Кошелек.svg","category":"main","name":"Кошелек"},{"path":"main-objects/Лампа.svg","category":"main","name":"Лампа"},{"path":"main-objects/Монета.svg","category":"main","name":"Монета"},{"path":"main-objects/Наушники.svg","category":"main","name":"Наушники"},{"path":"main-objects/Пазлы.svg","category":"main","name":"Пазлы"},{"path":"main-objects/Папка.svg","category":"main","name":"Папка"},{"path":"main-objects/Ручка.svg","category":"main","name":"Ручка"},{"path":"main-objects/Телефон.svg","category":"main","name":"Телефон"}];\n  let bundledAssets = [];\n  async function loadBundledAssets() {\n    const results = await Promise.allSettled(bundledManifest.map(async item => {\n      const response = await fetch(encodeURI(item.path));\n      if (!response.ok) throw new Error(`${item.path}: HTTP ${response.status}`);\n      const asset = sanitizeSvg(await response.text(), item.name + '.svg');\n      asset.category = item.category;\n      asset.name = item.name === 'Vector' ? (item.category === 'main' ? 'Вектор (главный)' : 'Вектор (фон)') : item.name;\n      asset.tags = tokenize(asset.name);\n      asset.bundled = true;\n      return asset;\n    }));\n    bundledAssets = results.filter(r => r.status === 'fulfilled').map(r => r.value);\n    state.assets = [...bundledAssets];\n    renderLibrary();\n    if (bundledAssets.length !== bundledManifest.length) toast(`Загружено ${bundledAssets.length} из ${bundledManifest.length} встроенных SVG`);\n    else toast(`Библиотека готова: ${bundledAssets.length} SVG`);\n  }\n\n  // Только SVG, импортированные из исходных иллюстраций.
   const state = {
     assets: [],
     scene: [],
@@ -355,7 +355,7 @@
 
   function composeByMetaphor(prompt = $('#metaphorInput').value) {
     if (!prompt.trim()) return toast('Введите метафору или заголовок');
-    if (!state.assets.length) return toast('Сначала загрузите исходные SVG-объекты');
+    if (!state.assets.length) return toast('Библиотека SVG ещё загружается');
     snapshot();
     const ranked = state.assets.map(asset => ({asset, score: scoreAsset(asset, prompt)})).sort((a,b) => b.score-a.score);
     let selected = ranked.filter(x => x.score > 0).slice(0, 5).map(x => x.asset);
@@ -484,7 +484,7 @@
     if (type === 'help') {
       root.innerHTML = `<div class="eyebrow">Короткая демонстрация</div><h2>От идеи до SVG за три шага</h2><p>Редактор не создаёт и не дорисовывает объекты. Он работает как умная монтажная поверхность для готовой библиотеки.</p><div class="steps"><div class="step"><b>1 · Загрузите</b><span>Добавьте отдельные SVG-файлы. Структура, пропорции и векторные пути сохраняются.</span></div><div class="step"><b>2 · Скомпонуйте</b><span>Введите метафору или точные названия. Алгоритм подберёт объекты и разложит их на холсте.</span></div><div class="step"><b>3 · Экспортируйте</b><span>Настройте слои, формат и палитру, затем скачайте редактируемый SVG.</span></div></div><p class="microcopy">Безопасность: при импорте удаляются исполняемые скрипты, внешние ссылки и foreignObject; геометрия SVG остаётся без изменений.</p>`;
     } else {
-      root.innerHTML = `<div class="eyebrow">Исходные материалы</div><h2>Примеры работы</h2><p>Сначала загрузите SVG из исходных иллюстраций кнопкой ＋ или перетаскиванием. Затем используйте подбор по метафоре или по названиям. Посторонние встроенные рисунки отключены.</p>`;
+      root.innerHTML = `<div class="eyebrow">Исходные материалы</div><h2>Примеры работы</h2><p>Исходные SVG уже загружены во встроенную библиотеку. Выберите метафору или названия, чтобы автоматически собрать композицию; дополнительные SVG можно импортировать вручную.</p>`;
     }
     $('#infoDialog').showModal();
   }
@@ -505,7 +505,7 @@
   $('#dropzone').addEventListener('drop', e => importSvgFiles(e.dataTransfer.files));
   $('#searchInput').addEventListener('input', renderLibrary);
   $('#categoryFilter').addEventListener('change', renderLibrary);
-  $('#resetDemoBtn').addEventListener('click', () => { if (!confirm('Очистить библиотеку и композицию?')) return; snapshot(); state.assets = []; state.scene = []; state.selectedId = null; renderAll(); toast('Библиотека очищена'); });
+  $('#resetDemoBtn').addEventListener('click', () => { if (!confirm('Очистить библиотеку и композицию?')) return; snapshot(); state.assets = [...bundledAssets]; state.scene = []; state.selectedId = null; renderAll(); toast('Композиция очищена, встроенная библиотека восстановлена'); });
   $('#layoutSelect').addEventListener('change', e => { snapshot(); state.layout = e.target.value; layoutScene(); });
   $('#shuffleBtn').addEventListener('click', () => { snapshot(); layoutScene(); toast('Композиция перестроена'); });
   $('#applyPaletteBtn').addEventListener('click', () => { snapshot(); state.paletteIndex = -1; renderAll(); toast('Палитра применена ко всей сцене'); });
@@ -566,5 +566,4 @@
   });
   window.addEventListener('resize', fitCanvas);
 
-  renderLibrary(); renderPalette(); renderAll();
-})();
+  renderLibrary(); renderPalette(); renderAll();\n  loadBundledAssets();\n})();
